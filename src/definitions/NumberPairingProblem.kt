@@ -208,7 +208,7 @@ open class NumberPairingProblem(val sumOfNumberPairing: Double = defaultSum, col
         var othersSorted: Array<NumberPairing>? = null
         if (otherResults != null) {
             othersSorted = otherResults?.toTypedArray()
-            othersSorted?.sortBy{it.result}
+            othersSorted?.sortByDescending{it.result}
         }
 
         // Assign values to results members
