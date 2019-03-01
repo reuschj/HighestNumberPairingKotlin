@@ -1,6 +1,5 @@
 package tests
 
-import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import org.junit.Test
 
@@ -11,7 +10,7 @@ import definitions.NumberPairingProblem
 val largeProblemSize: Double = 900.0
 val massiveProblemSize: Double = 9_000_000.0
 
-class NumberPairingTests {
+class NumberPairingProblemUnitTests {
 
     private fun printWithOtherResults(size: Double = 8.0): NumberPairingProblem {
         val testProblem = NumberPairingProblem(size)
