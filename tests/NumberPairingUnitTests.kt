@@ -17,8 +17,8 @@ class NumberPairingUnitTests {
         val sixAddsUpToEight = NumberPairing(6.0, 8.0)
         val threeAddsUpToEight = NumberPairing(3.0, 8.0)
         val threeAddsUpToTen = NumberPairing(3.0, 10.0)
-        assertTrue(twoAddsUpToEight.isEqualTo(twoAlsoAddsUpToEight), "twoAddsUpToEight should equal twoAddsUpToEight")
-        assertTrue(twoAddsUpToEight.isEqualTo(sixAddsUpToEight), "twoAddsUpToEight should equal twoAddsUpToEight")
+        assertTrue(twoAddsUpToEight.equals(twoAlsoAddsUpToEight), "twoAddsUpToEight should equal twoAddsUpToEight")
+        assertTrue(twoAddsUpToEight.equals(sixAddsUpToEight), "twoAddsUpToEight should equal twoAddsUpToEight")
         assertTrue(threeAddsUpToEight != sixAddsUpToEight, "threeAddsUpToEight should not equal sixAddsUpToEight")
         assertTrue(threeAddsUpToEight != threeAddsUpToTen, "threeAddsUpToEight should not equal threeAddsUpToTen")
     }

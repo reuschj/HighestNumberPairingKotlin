@@ -6,57 +6,51 @@ import constants.lineMedium
 import utilities.roundNumberToString
 
 /**
- * A structure that stores two numbers that sum to a given amount.
+ * Stores two numbers that sum to a given amount.
  * Finds the product, the difference and the result of multiplying the difference and the product.
  */
-open class NumberPairing(oneNumber: Double, val sumOfNumbers: Double = 8.0): Comparable<NumberPairing> {
-    private var storedNumber: Double = validateAndCorrectNumberInput(oneNumber)
+data class NumberPairing(private var oneNumber: Double, val sumOfNumbers: Double = 8.0): Comparable<NumberPairing> {
+
+    private val anchor: Double
+        get() = validateAndCorrectNumberInput(oneNumber)
+
     var firstNumber: Double
-        get() {
-            return storedNumber
-        }
+        get() = anchor
         set(newValue) {
-            storedNumber = validateAndCorrectNumberInput(newValue)
-        }
-    var secondNumber: Double
-        get() {
-            return sumOfNumbers - storedNumber
-        }
-        set(newValue) {
-            storedNumber = sumOfNumbers - validateAndCorrectNumberInput(newValue)
-        }
-    val product: Double
-        get() {
-            return storedNumber * secondNumber
-        }
-    val difference: Double
-        get() {
-            return abs(storedNumber - secondNumber)
-        }
-    val result: Double
-        get() {
-            return product * difference
-        }
-    val hash: Double
-        get() {
-            return storedNumber + sumOfNumbers + result
+            oneNumber = validateAndCorrectNumberInput(newValue)
         }
 
-    // Secondary constructor
-    constructor(oneNumber: Double) : this(oneNumber, 8.0)
+    var secondNumber: Double
+        get() = sumOfNumbers - anchor
+        set(newValue) {
+            oneNumber = sumOfNumbers - validateAndCorrectNumberInput(newValue)
+        }
+
+    val product: Double
+        get() = anchor * secondNumber
+
+    val difference: Double
+        get() = abs(anchor - secondNumber)
+
+    val result: Double
+        get() = product * difference
+
+    val hashCode: Double
+        get() = anchor + sumOfNumbers + result
+
+    // Secondary constructor with default sum
+    constructor(oneNumber: Double) : this(oneNumber, sumOfNumbers = 8.0)
 
     // Methods --------------------------------------------------------------- /
 
     // Finds the differnce between two NumberPairings
-    fun difference(anotherNumberPairing: NumberPairing): Double {
-        return abs(result - anotherNumberPairing.result)
-    }
+    fun difference(anotherNumberPairing: NumberPairing): Double =
+        abs(result - anotherNumberPairing.result)
 
     // This will test if two results are close enough to be considered equal to each other
     // The two NumberPairings may still be !=
-    fun isEquivalentTo(anotherNumberPairing: NumberPairing): Boolean {
-        return this.difference(anotherNumberPairing) < minimumPrecision
-    }
+    fun isEquivalentTo(anotherNumberPairing: NumberPairing): Boolean =
+        difference(anotherNumberPairing) < minimumPrecision
 
     // Creates a long report with both numbers, the product, difference and the result
     fun longReport(): String {
@@ -66,13 +60,13 @@ open class NumberPairing(oneNumber: Double, val sumOfNumbers: Double = 8.0): Com
         val differenceRounded = roundNumberToString(difference, 100_000.00)
         val resultRounded = roundNumberToString(result, 100_000.00)
         return """
-            Numbers: $firstRounded and $secondRounded
-            $lineMedium
-            Product: $productRounded
-            Difference: $differenceRounded
-            $lineMedium
-            Result: $resultRounded\n
-            """
+        Numbers: $firstRounded and $secondRounded
+        $lineMedium
+        Product: $productRounded
+        Difference: $differenceRounded
+        $lineMedium
+        Result: $resultRounded\n
+        """
     }
 
     // Creates a short report with both numbers and the result
@@ -94,11 +88,11 @@ open class NumberPairing(oneNumber: Double, val sumOfNumbers: Double = 8.0): Com
     // Static Methods -------------------------------------------------------- /
 
     // Method for checking equality
-    fun isEqualTo(other: NumberPairing): Boolean {
-        val sumsAreEqual = this.sumOfNumbers == other.sumOfNumbers
-        val storedAreEqual = this.storedNumber == other.storedNumber
-        val storedIsEqualToInverse = this.storedNumber == other.secondNumber
-        return (sumsAreEqual && storedAreEqual) || (sumsAreEqual && storedIsEqualToInverse)
+    fun equals(other: NumberPairing?): Boolean {
+        val sumsAreEqual = sumOfNumbers == other?.sumOfNumbers
+        val anchorsAreEqual = anchor == other?.anchor
+        val anchorIsEqualToInverse = anchor == other?.secondNumber
+        return (sumsAreEqual && anchorsAreEqual) || (sumsAreEqual && anchorIsEqualToInverse)
     }
 
     // Method for comparison
