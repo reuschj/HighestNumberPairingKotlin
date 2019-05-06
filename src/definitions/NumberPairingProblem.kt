@@ -11,32 +11,31 @@ import constants.lineMedium
  * The problem must find the largest number combination (determined by multiplying the difference by the product of the two numbers)
  */
 open class NumberPairingProblem(val sumOfNumberPairing: Double = defaultSum, collectOtherResults: Boolean = true) {
+
     var runsToSolve: Int = 0
+
     val introString: String
-        get() {
-            return "Problem:\nFind two numbers that add up to ${roundNumberToString(sumOfNumberPairing)}, such that the product multiplied by the difference produces the largest possible value.\n"
-        }
-    // Private property to store results
+        get() = "Problem:\nFind two numbers that add up to ${roundNumberToString(sumOfNumberPairing)}, such that the product multiplied by the difference produces the largest possible value.\n"
+
+    // Private property to store results as nullable types
     private var results = object {
         var bestResult: Double? = null
         var bestNumberPairings: MutableSet<NumberPairing>? = null
         var otherNumberPairings: Array<NumberPairing>? = null
     }
+
     // Accesses best result
     val bestResult: Double
-        get() {
-            return results.bestResult ?: 0.0
-        }
+        get() = results.bestResult ?: 0.0
+
     // Accesses best result and output as a formatted string report
     val bestResultReport: String
-        get() {
-            return "Best Result:\n$bestResult\n$lineMedium\n"
-        }
+        get() = "Best Result:\n$bestResult\n$lineMedium\n"
+
     // Accesses an array of winning number pairings
     val bestNumberPairings: MutableSet<NumberPairing>
-        get() {
-            return results.bestNumberPairings ?: mutableSetOf<NumberPairing>()
-        }
+        get() = results.bestNumberPairings ?: mutableSetOf()
+
     // Accesses an array of winning number pairings and outputs as formatted string report
     val bestNumberPairingsReport: String
         get() {
@@ -49,9 +48,7 @@ open class NumberPairingProblem(val sumOfNumberPairing: Double = defaultSum, col
         }
     // Accesses an array of other number pairings
     val otherNumberPairings: Array<NumberPairing>?
-        get() {
-            return results.otherNumberPairings
-        }
+        get() = results.otherNumberPairings
     // Accesses an array of other number pairings and outputs as formatted string report
     var otherNumberPairingsReport: String? = null
         get() {
@@ -71,8 +68,8 @@ open class NumberPairingProblem(val sumOfNumberPairing: Double = defaultSum, col
         getResults(collectOtherResults)
     }
 
-    // Secondary convenience constructor
-    constructor(): this(8.0, true)
+    // Secondary convenience constructor with defaults
+    constructor(): this(sumOfNumberPairing = 8.0, collectOtherResults = true)
 
 
     // Methods --------------------------------------------------------------- /
